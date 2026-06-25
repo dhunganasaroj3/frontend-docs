@@ -1,0 +1,173 @@
+@import 'tailwindcss';
+
+/* Tailwind v4: drive dark: variants off our [data-theme='dark'] attribute */
+@custom-variant dark (&:where([data-theme='dark'], [data-theme='dark'] *));
+
+/* ============================================================
+   Theme tokens — light is default, [data-theme='dark'] overrides.
+   Components read these via var(--token); Shiki blocks switch via
+   their own CSS variables (see CodeBlock).
+   ============================================================ */
+:root {
+  --bg: #f7f8fb;
+  --bg-soft: #eef1f6;
+  --surface: #ffffff;
+  --surface-2: #f3f5f9;
+  --border: #e2e6ee;
+  --border-strong: #cbd2e0;
+  --text: #1b2230;
+  --text-soft: #4a5468;
+  --muted: #6b7689;
+  --accent: #2563eb;
+  --accent-soft: #dbe7ff;
+  --accent-text: #1d4ed8;
+  --ring: #93b4ff;
+
+  /* callout palette */
+  --tip: #0e9f6e;
+  --tip-bg: #e7f8f1;
+  --warn: #d97706;
+  --warn-bg: #fdf1df;
+  --danger: #dc2626;
+  --danger-bg: #fdeaea;
+  --info: #2563eb;
+  --info-bg: #e6efff;
+
+  /* diagram accents */
+  --d-1: #2563eb;
+  --d-2: #7c3aed;
+  --d-3: #0e9f6e;
+  --d-4: #d97706;
+  --d-5: #db2777;
+  --d-grid: #e2e6ee;
+
+  --shadow: 0 1px 2px rgba(16, 24, 40, 0.06), 0 8px 24px rgba(16, 24, 40, 0.06);
+  --radius: 14px;
+  --sidebar-w: 280px;
+  --header-h: 56px;
+}
+
+[data-theme='dark'] {
+  --bg: #0b1020;
+  --bg-soft: #0e1426;
+  --surface: #121a2e;
+  --surface-2: #18223a;
+  --border: #202c47;
+  --border-strong: #2c3a5c;
+  --text: #e7edf8;
+  --text-soft: #b7c2d8;
+  --muted: #8593ad;
+  --accent: #60a5fa;
+  --accent-soft: #16294b;
+  --accent-text: #93c5fd;
+  --ring: #2563eb;
+
+  --tip: #34d399;
+  --tip-bg: #0c2a22;
+  --warn: #fbbf24;
+  --warn-bg: #2a2010;
+  --danger: #f87171;
+  --danger-bg: #2a1414;
+  --info: #60a5fa;
+  --info-bg: #0f1f3d;
+
+  --d-1: #60a5fa;
+  --d-2: #a78bfa;
+  --d-3: #34d399;
+  --d-4: #fbbf24;
+  --d-5: #f472b6;
+  --d-grid: #202c47;
+
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 12px 32px rgba(0, 0, 0, 0.35);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto,
+    Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--accent-soft);
+  color: var(--accent-text);
+}
+
+/* thin, themed scrollbars */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-strong) transparent;
+}
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+*::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: 99px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+/* prose-ish defaults for content bodies */
+.prose-body {
+  line-height: 1.7;
+  color: var(--text-soft);
+  font-size: 0.975rem;
+}
+.prose-body strong {
+  color: var(--text);
+  font-weight: 650;
+}
+.prose-body code:not(pre code) {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.1em 0.4em;
+  font-size: 0.86em;
+  font-family: ui-monospace, 'SF Mono', 'JetBrains Mono', Menlo, Consolas,
+    monospace;
+  color: var(--accent-text);
+  white-space: nowrap;
+}
+.prose-body a {
+  color: var(--accent-text);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* Shiki: swap the inline theme colors for the dark variant.
+   react-shiki emits both --shiki-light* and --shiki-dark* custom props. */
+.shiki,
+.shiki span {
+  background-color: var(--shiki-light-bg) !important;
+  color: var(--shiki-light) !important;
+}
+[data-theme='dark'] .shiki,
+[data-theme='dark'] .shiki span {
+  background-color: var(--shiki-dark-bg) !important;
+  color: var(--shiki-dark) !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
