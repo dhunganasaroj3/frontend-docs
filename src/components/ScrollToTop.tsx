@@ -1,13 +1,12 @@
 import { useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
+import { scrollPageToTop } from '../lib/scroll'
 
-/** Scrolls the main content region to top whenever the route changes. */
-export function ScrollToTop({ target }: { target?: string }) {
+/** Scrolls to top whenever the route changes (covers Prev/Next + cross-topic nav). */
+export function ScrollToTop() {
   const { pathname } = useLocation()
   useEffect(() => {
-    const el = target ? document.querySelector(target) : null
-    if (el) el.scrollTo({ top: 0 })
-    else window.scrollTo({ top: 0 })
-  }, [pathname, target])
+    scrollPageToTop()
+  }, [pathname])
   return null
 }

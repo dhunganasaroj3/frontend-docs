@@ -1,5 +1,6 @@
 import { NavLink } from 'react-router-dom'
 import { GROUPS } from '../content'
+import { scrollPageToTop } from '../lib/scroll'
 
 interface SidebarProps {
   /** Mobile drawer open state (ignored on desktop where it's always visible). */
@@ -11,6 +12,13 @@ const linkBase =
   'block rounded-lg px-3 py-1.5 text-[0.86rem] leading-snug transition-colors'
 
 export function Sidebar({ open, onNavigate }: SidebarProps) {
+  // Close the mobile drawer AND scroll to top — the scroll handles re-clicking
+  // the topic you're already on (where the route doesn't change, so the
+  // route-based ScrollToTop effect wouldn't fire).
+  const handleNavClick = () => {
+    onNavigate()
+    scrollPageToTop()
+  }
   return (
     <>
       {/* backdrop for the mobile drawer */}
@@ -34,7 +42,7 @@ export function Sidebar({ open, onNavigate }: SidebarProps) {
         <NavLink
           to="/"
           end
-          onClick={onNavigate}
+          onClick={handleNavClick}
           className={({ isActive }) =>
             `${linkBase} mb-2 font-semibold ${isActive ? 'shadow-sm' : ''}`
           }
@@ -67,7 +75,7 @@ export function Sidebar({ open, onNavigate }: SidebarProps) {
                 <NavLink
                   key={topic.slug}
                   to={`/topic/${topic.slug}`}
-                  onClick={onNavigate}
+                  onClick={handleNavClick}
                   title={topic.summary}
                   className={({ isActive }) =>
                     `${linkBase} ${isActive ? 'font-medium' : ''}`
@@ -90,7 +98,7 @@ export function Sidebar({ open, onNavigate }: SidebarProps) {
         />
         <NavLink
           to="/quiz"
-          onClick={onNavigate}
+          onClick={handleNavClick}
           className={({ isActive }) =>
             `${linkBase} font-semibold ${isActive ? 'shadow-sm' : ''}`
           }

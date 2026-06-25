@@ -64,7 +64,7 @@ export default function App() {
           id="main-scroll"
           className="min-w-0 flex-1 px-5 py-8 sm:px-8 lg:px-12"
         >
-          <ScrollToTop target="#main-scroll" />
+          <ScrollToTop />
           <div className="mx-auto max-w-3xl">
             <Routes>
               <Route path="/" element={<HomePage />} />
